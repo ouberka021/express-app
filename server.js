@@ -3,8 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
-const Todos = require('./models/todos.js');
-const todosData = require('./utilities/todosData');
+const Item = require('./models/item.js');
+const itemData = require('./utilities/itemData');
+const User = require('./models/user.js');
+const userData = require('./utilities/userData');
 
 
 // Environment Variables
@@ -31,13 +33,20 @@ app.use(express.static('public')) // we need to tell express to use the public d
 app.use(cors())
 
 // Routes
-const todosController = require('./controllers/todos.js');
+const itemController = require('./controllers/item.js');
+const userController = require('./controllers/user.js');
 
-app.use('/todos', todosController);
+app.use('/item', itemController);
+app.use('/user', userController);
 
 app.get('/seed', async (req, res) => {
-    await Todos.deleteMany({});
-    await Todos.insertMany(todosData);
+    await item.deleteMany({});
+    await Item.insertMany(itemData);
+    res.send('done!');
+  });
+  app.get('/seed2', async (req, res) => {
+    await User.deleteMany({});
+    await User.insertMany(userData);
     res.send('done!');
   });
 
